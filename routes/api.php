@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,7 @@ use App\Http\Controllers\AuthController;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::get('/categories', [CategoryController::class, 'allCategories']);
 
 // Endpoints that need to only be accessible to authenticated users. Luckily for us, we can do that using the sanctum authenticated guard.
 // See https://www.twilio.com/blog/build-restful-api-php-laravel-sanctum
