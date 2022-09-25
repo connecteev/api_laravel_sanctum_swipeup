@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+
+// Endpoints that need to only be accessible to authenticated users. Luckily for us, we can do that using the sanctum authenticated guard.
+// See https://www.twilio.com/blog/build-restful-api-php-laravel-sanctum
+// This will make sure requests to this endpoint contain a valid API token in the header.
+Route::post('/me', [AuthController::class, 'me'])->middleware('auth:sanctum');
