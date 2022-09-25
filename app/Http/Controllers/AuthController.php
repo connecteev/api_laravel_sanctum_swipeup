@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
+// From https://www.twilio.com/blog/build-restful-api-php-laravel-sanctum
 class AuthController extends Controller
 {
     public function register(Request $request)
