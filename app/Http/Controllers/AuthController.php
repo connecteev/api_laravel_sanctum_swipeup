@@ -52,10 +52,5 @@ class AuthController extends Controller
     {
         return $request->user();
     }
-
-    public function getFirstUserDeleteThisCode(Request $request)
-    {
-        $user = User::firstOrFail();
-        return $user;
-    }
+    
 }

@@ -22,7 +22,3 @@ Route::post('/login', [AuthController::class, 'login']);
 // See https://www.twilio.com/blog/build-restful-api-php-laravel-sanctum
 // This will make sure requests to this endpoint contain a valid API token in the header.
 Route::post('/me', [AuthController::class, 'me'])->middleware('auth:sanctum');
-
-
-// DELETE THIS
-Route::get('/getFirstUserDeleteThisCode', [AuthController::class, 'getFirstUserDeleteThisCode']);
