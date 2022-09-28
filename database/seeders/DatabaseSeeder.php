@@ -5,7 +5,9 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use \App\Models\User;
 use \App\Models\Category;
+use \App\Models\Collection;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,13 +18,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-
         $categories = array(
             ["id" => 1, "slug" => "work", "name" => "Work", "image" => "category-work", "color" => "color-red"],
             ["id" => 2, "slug" => "stress", "name" => "Stress", "image" => "category-stress", "color" => "color-blue"],
@@ -35,5 +30,16 @@ class DatabaseSeeder extends Seeder
         );
         // DB::table('categories')->insert($categories);
         Category::insert($categories);
+
+        // User::factory(10)->create();
+        $testUser = User::factory()->create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+        ]);
+
+        $collections = Collection::factory()
+            ->count(10)
+            ->for($testUser)
+            ->create();
     }
 }
