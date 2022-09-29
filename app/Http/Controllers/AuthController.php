@@ -53,5 +53,17 @@ class AuthController extends Controller
     {
         return $request->user();
     }
+
+    public function logout(Request $request)
+    {
+        $user = $request->user();
+        // Session::flush();
+        // Auth::logout();
+        // auth()->user()->tokens()->delete();
+        $user->tokens()->delete();
+        return [
+            'message' => "User (id: $user->id, email: $user->email) logged out"
+        ];
+    }
     
 }

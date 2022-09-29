@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Collection;
 use Illuminate\Http\Request;
+use Validator;
+use App\Http\Resources\CollectionResource;
 
 class CollectionController extends Controller
 {
@@ -14,7 +16,8 @@ class CollectionController extends Controller
      */
     public function index()
     {
-        //
+        $data = Collection::latest()->get();
+        return response()->json(CollectionResource::collection($data));
     }
 
     /**
@@ -35,7 +38,20 @@ class CollectionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'user_id' => 'required',
+            'name' => 'required|string|max:255'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        }
+
+        $collection = Collection::create([
+            'user_id' => $request->user_id,
+            'name' => $request->name
+         ]);
+        return response()->json(['Collection created successfully.', new CollectionResource($collection)]);
     }
 
     /**
@@ -44,9 +60,25 @@ class CollectionController extends Controller
      * @param  \App\Models\Collection  $collection
      * @return \Illuminate\Http\Response
      */
-    public function show(Collection $collection)
+    // public function show(Collection $collection)
+    // {
+    //     //
+    // }
+
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
     {
-        //
+        $collection = Collection::find($id);
+        if (is_null($collection)) {
+            return response()->json('Data not found', 404);
+        }
+        return response()->json([new CollectionResource($collection)]);
     }
 
     /**
@@ -69,7 +101,19 @@ class CollectionController extends Controller
      */
     public function update(Request $request, Collection $collection)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'user_id' => 'required',
+            'name' => 'required|string|max:255'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        }
+
+        $collection->name = $request->name;
+        $collection->desc = $request->desc;
+        $collection->save();
+        return response()->json(['Collection updated successfully.', new CollectionResource($collection)]);
     }
 
     /**
@@ -80,6 +124,8 @@ class CollectionController extends Controller
      */
     public function destroy(Collection $collection)
     {
-        //
+        $collection->delete();
+
+        return response()->json('Collection deleted successfully');
     }
 }
