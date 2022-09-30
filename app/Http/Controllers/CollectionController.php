@@ -116,7 +116,7 @@ class CollectionController extends Controller
         if ($loggedInUser->id != $collection->user_id) {
             return response()->json("Forbidden, item # $id does not belong to this user", 403);
         }
-        return response()->json([new CollectionResource($collection)]);
+        return response()->json(new CollectionResource($collection));
     }
 
     /**
