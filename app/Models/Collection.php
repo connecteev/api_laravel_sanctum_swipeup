@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Collection extends Model
 {
     use HasFactory;
-    
+    protected $guarded = [];
+
     /**
      * Get the user that owns the collection.
      */

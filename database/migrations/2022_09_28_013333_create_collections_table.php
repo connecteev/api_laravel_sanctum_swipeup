@@ -21,9 +21,10 @@ return new class extends Migration
             // $table->foreign('user_id')->references('id')->on('users');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');;
             // $table->cascadeOnDelete();
-            
+
             $table->string('name');
             $table->timestamps();
+            $table->unique(['user_id', 'name']);
         });
     }
 
