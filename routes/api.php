@@ -6,6 +6,9 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CollectionController;
 
+// For Firebase / Firestore CRUD test functions
+use App\Http\Controllers\TestController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -34,3 +37,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 	// API route for logout user
 	Route::post('/logout', [AuthController::class, 'logout']);
 });
+
+
+// Firebase / Firestore CRUD test functions
+// From https://www.twilio.com/blog/create-restful-crud-api-php-using-laravel-google-firebase
+Route::post('/', [TestController::class, 'create']);
+Route::get('/', [TestController::class, 'index']);
+Route::put('/', [TestController::class, 'edit']);
+Route::delete('/', [TestController::class, 'delete']);
+
